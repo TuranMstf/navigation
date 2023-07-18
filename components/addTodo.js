@@ -10,7 +10,7 @@ export default function AddTodo({submitHandler}) {
     }
 
   return (
-    <View>
+    <View style={Styles.container}>
       <TextInput 
       style={Styles.input}
       placeholder='New TODO'
@@ -22,11 +22,16 @@ export default function AddTodo({submitHandler}) {
 }
 
 const Styles = StyleSheet.create ({
-    input: {
-        marginBottom: 10,
-        paddingHorizontal: 8,
-        paddingVertical: 6,
-        borderBottomWidth: 1,
-        borderBottomColor: '#ddd'
-    }
+  container: {
+    flexDirection:'column',
+    justifyContent: 'space-around',
+    alignContent: 'space-around'
+  },
+  input: {
+      marginBottom: 10,
+      paddingHorizontal: 8,
+      paddingVertical: 6,
+      borderBottomWidth: 1,
+      borderBottomColor: '#ddd'
+  }
 })
