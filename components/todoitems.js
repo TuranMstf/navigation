@@ -5,13 +5,13 @@ export default function todoitems({item, pressHandler}) {
   if (item.isItEnd==false) {
     return (
       <TouchableOpacity onPress={() => pressHandler(item)} >
-          <Text style= {Styles.item}> {item.text} </Text>
+          <Text style= {Styles.item}> {item.text}----{item.isItEnd.toString()}---------{item.id} </Text>
       </TouchableOpacity>
     )
   }
   return (
     <TouchableOpacity onPress={() => pressHandler(item)} >
-        <Text style= {Styles.item2}> {item.text}</Text>
+        <Text style= {Styles.item2}>{item.text}----{item.isItEnd.toString()}---------{item.id}</Text>
     </TouchableOpacity>
   )
 }

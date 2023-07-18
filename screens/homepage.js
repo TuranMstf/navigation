@@ -1,4 +1,4 @@
-import { View, Text, FlatList, StyleSheet, Button, Modal } from 'react-native';
+import { View, Text, FlatList, StyleSheet, Button, Modal, LogBox } from 'react-native';
 import React, {useState} from 'react';
 import Header from '../components/header';
 import TodoItem from '../components/todoitems';
@@ -7,25 +7,24 @@ import AddTodo from '../components/addTodo';
 export default function homepage({navigation}) {
 
     const [modalVisible, setModalVisible] = useState(false);
+    const [nextId, setnextId]=useState(3);
     
     const [todos, setTodos] = useState ([
         {text: 'asd 0', id: '0', isItEnd:false},
         {text: 'asd 1', id: '1', isItEnd:false},
         {text: 'asd 2', id: '2', isItEnd:false},
-        {text: 'asd 3', id: '3', isItEnd:false},
     ]);
     const [endTodos, setEndTodos] = useState ([
-        {text: null, id: null},
     ]);
 
     const pressHandler =(item) => {  
-         setEndTodos ((prevTodods) => {
-             return [
-                 {text: item.text, id: item.id},
-                 ...prevTodods,
-          
-             ]
-         })
+        //  setEndTodos ((prevTodods) => {
+        //      return [
+        //          {text: item.text, id: item.id},
+        //          ...prevTodods          
+        //      ]
+        //  })
+        endTodos.push( {text: item.text, id: item.id});
         const nextList = [...todos];
         nextList[item.id].isItEnd = true; // Problem: mutates list[0]
         setTodos(nextList);
@@ -35,13 +34,18 @@ export default function homepage({navigation}) {
     }               
 
     const submitHandler = (text) => {
+        
+        //  setTodos ((prevTodods) => {
+        //      return [
+        //      {text: text, id: Math.random().toString(), isItEnd: 'false'},
+        //          ...prevTodods
+        //      ]
+             
+        //  })
+        todos.push( {text: text, id: nextId, isItEnd: false});
+        setnextId(nextId+1);
+        console.log(nextId);
         setModalVisible(false);
-        setTodos ((prevTodods) => {
-            return [
-                {text: text, id: Math.random().toString()},
-                ...prevTodods
-            ]
-        })
     }
 
   return (
@@ -54,12 +58,6 @@ export default function homepage({navigation}) {
             animationType='slide'>
                 <AddTodo submitHandler={submitHandler}/>
                 <Button title='cancel'color={'black'} onPress={()=> setModalVisible(false)}/>
-                <FlatList
-                data={endTodos}
-                renderItem={({item}) => (
-                    <Text>{item.text}{item.id}</Text>
-                )}
-                />
             </Modal>
             <Button title='ADD TODO' color={'black'} onPress={()=> setModalVisible(true)}/>
             <View style={Styles.list}>
@@ -81,7 +79,7 @@ export default function homepage({navigation}) {
 const Styles = StyleSheet.create ({
     container: {
         flex: 1,
-        backgroundColor: 'pink',
+        backgroundColor: `#20b2aa`,
         
     },
     content: {

@@ -17,7 +17,7 @@ export default function secondpage({route}) {
 const styles = StyleSheet.create({
   container: {
     flex:1,
-    backgroundColor: 'pink'
+    backgroundColor: `#20b2aa`
   },
   textStyle: {
     textAlign: 'center',
