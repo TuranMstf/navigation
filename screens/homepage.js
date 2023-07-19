@@ -1,4 +1,4 @@
-import { View, Text, FlatList, StyleSheet, Button, Modal, LogBox } from 'react-native';
+import { View, FlatList, StyleSheet, Button, Modal, SafeAreaView, TouchableWithoutFeedback } from 'react-native';
 import React, {useState} from 'react';
 import Header from '../components/header';
 import TodoItem from '../components/todoitems';
@@ -44,50 +44,78 @@ export default function homepage({navigation}) {
         //  })
         todos.push( {text: text, id: nextId, isItEnd: false});
         setnextId(nextId+1);
-        console.log(nextId);
         setModalVisible(false);
+    }
+    const closeModal =() => {
+        console.log('çalışıyor');
+        if (modalVisible==true) {
+            setModalVisible(false);
+        }
     }
 
   return (
-    <View style={Styles.container}>
-        <Header/>
-        <View style={Styles.content}>
-            <Modal
+    <SafeAreaView style={Styles.container}>
+        <Header/>        
+        <Modal
             visible={modalVisible}
-            transparent={false}
+            transparent={true}
             animationType='slide'>
-                <AddTodo submitHandler={submitHandler}/>
-                <Button title='cancel'color={'black'} onPress={()=> setModalVisible(false)}/>
-            </Modal>
-            <Button title='ADD TODO' color={'black'} onPress={()=> setModalVisible(true)}/>
+                <View style={Styles.modal}>
+                     <AddTodo submitHandler={submitHandler}/>   
+                     <View style={{padding: 5}}/>
+                     <Button color={'black'} title='cancel'onPress={()=> setModalVisible(false)}/>                  
+                </View>
+                
+        </Modal>
+        <View style={Styles.content}>
+            <View style={Styles.viewButton}>
+                <Button title='ADD TODO' color={'black'} onPress={()=> setModalVisible(true)}/>
+                <View style={{padding: 5}}/>
+                <Button title='Done Todos' color={'black'}
+                    onPress={() => navigation.navigate ('secondpage',
+                    { blogpost: endTodos, })}
+                />
+            </View>
+            
             <View style={Styles.list}>
                 <FlatList
                 data={todos}
                 renderItem={({item}) => (
                     <TodoItem item={item} pressHandler={pressHandler} />
                 )}
-                />
+                />                
             </View>
-            <Button title='Done Todos' color={'black'}
-            onPress={() => navigation.navigate ('secondpage',
-            { blogpost: endTodos, })}
-            />
+            
         </View>
-    </View>
+    </SafeAreaView>
   )
 }
 const Styles = StyleSheet.create ({
     container: {
         flex: 1,
-        backgroundColor: `#20b2aa`,
-        
+        backgroundColor: `#20b2aa`, 
+        justifyContent: 'flex-end',       
+    },
+    modal: {
+        backgroundColor: 'white',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        marginTop: 'auto'
     },
     content: {
         padding: 40,
+        justifyContent: 'space-around',
+        flex:1
+        
     },  
     list: {
+        flex:10,
         marginTop: 20,
-    }
-   
+        
+    },
+    viewButton: {
+        justifyContent: 'center',
+        flex:1
+    },
 });
 
