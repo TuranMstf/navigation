@@ -2,13 +2,21 @@ import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
 
 export default function todoitems({item, pressHandler}) { 
+  const press = (item) => {
+    if (item.isItEnd==false) {
+      pressHandler(item);
+    }
+  }
   return (
-    <TouchableOpacity onPress={() => pressHandler(item)} >
+    
+    <TouchableOpacity  onPress={() => press(item)} >
       { item.isItEnd  
         ? <Text style= {Styles.line}>{item.text}----{item.isItEnd.toString()}---------{item.id}</Text>
         : <Text style= {Styles.noline}>{item.text}----{item.isItEnd.toString()}---------{item.id} </Text>
       } 
     </TouchableOpacity>)
+
+    
 }
 
 const Styles = StyleSheet.create ({

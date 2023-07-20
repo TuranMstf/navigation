@@ -46,12 +46,12 @@ export default function homepage({navigation}) {
         setnextId(nextId+1);
         setModalVisible(false);
     }
-    const closeModal =() => {
+    /*const closeModal =() => {
         console.log('çalışıyor');
         if (modalVisible==true) {
             setModalVisible(false);
         }
-    }
+    }*/
 
   return (
     <SafeAreaView style={Styles.container}>
