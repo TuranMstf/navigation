@@ -1,4 +1,4 @@
-import { View, FlatList, StyleSheet, Button, Modal, SafeAreaView, TouchableWithoutFeedback } from 'react-native';
+import { View, FlatList, StyleSheet, Button, Modal, SafeAreaView, TouchableWithoutFeedback, Alert } from 'react-native';
 import React, {useState} from 'react';
 import Header from '../components/header';
 import TodoItem from '../components/todoitems';
@@ -17,13 +17,7 @@ export default function homepage({navigation}) {
     const [endTodos, setEndTodos] = useState ([
     ]);
 
-    const pressHandler =(item) => {  
-        //  setEndTodos ((prevTodods) => {
-        //      return [
-        //          {text: item.text, id: item.id},
-        //          ...prevTodods          
-        //      ]
-        //  })
+    const pressHandler =(item) => { 
         endTodos.push( {text: item.text, id: item.id});
         const nextList = [...todos];
         nextList[item.id].isItEnd = true; // Problem: mutates list[0]
@@ -42,9 +36,16 @@ export default function homepage({navigation}) {
         //      ]
              
         //  })
-        todos.push( {text: text, id: nextId, isItEnd: false});
-        setnextId(nextId+1);
-        setModalVisible(false);
+        if ( text.length>0 ) {
+            todos.push( {text: text, id: nextId, isItEnd: false});
+            setnextId(nextId+1);
+            setModalVisible(false);
+        } else {
+            Alert.alert('WARNİNG','Please Enter Todo',[
+                {text:'OK'}
+            ])
+        }
+        
     }
     /*const closeModal =() => {
         console.log('çalışıyor');
@@ -73,7 +74,7 @@ export default function homepage({navigation}) {
                 <View style={{padding: 5}}/>
                 <Button title='Done Todos' color={'black'}
                     onPress={() => navigation.navigate ('secondpage',
-                    { blogpost: endTodos, })}
+                    { blogpost: endTodos})}
                 />
             </View>
             
